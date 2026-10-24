@@ -4,71 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Club de Fofocas</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f06d6f'/%3E%3Ccircle cx='32' cy='32' r='18' fill='%23fff7f4'/%3E%3Cpath d='M25 25c0-5 4-9 9-9s9 4 9 9v4c0 4-3 7-7 8l-2 7h-6l-2-7c-4-1-7-4-7-8v-4zm6 7h6v-3c0-2-2-4-4-4s-4 2-4 4v3zm0 0h6' stroke='%23f06d6f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
   <style>
     :root {
-      --bg: #f6efee;
-      --bg-2: #efe1dd;
-      --panel: rgba(255,255,255,0.75);
-      --panel-strong: #fffdfc;
-      --ink: #1e1717;
-      --muted: #685b59;
-      --soft: #eee2df;
-      --border: rgba(35, 25, 24, 0.12);
+      --bg: #121214;
+      --bg-alt: #1a1a1e;
+      --panel: rgba(32, 30, 35, 0.9);
+      --panel-soft: rgba(42, 39, 46, 0.9);
+      --panel-strong: #1d1b20;
+      --line: rgba(255,255,255,0.08);
+      --ink: #f4efe9;
+      --muted: #c7b8b1;
+      --soft: #eae0d8;
       --accent: #f06d6f;
-      --accent-2: #f2b7a6;
-      --accent-3: #9dcfd2;
-      --dark: #2c2120;
-      --success: #2f8d67;
-      --danger: #cf4e4e;
-      --shadow: 0 20px 46px rgba(28, 18, 17, 0.08);
-      --radius-xl: 30px;
+      --accent-2: #f4b29d;
+      --accent-3: #8dd4d5;
+      --warm: #ffcfb7;
+      --success: #7ad7a1;
+      --danger: #ff7d7d;
+      --shadow: 0 24px 60px rgba(0,0,0,0.35);
+      --radius-xl: 26px;
       --radius-lg: 22px;
       --radius-md: 16px;
       --radius-sm: 12px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      min-height: 100vh;
       font-family: Inter, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 15% 18%, rgba(240,109,111,0.095), transparent 18%),
-        radial-gradient(circle at 85% 8%, rgba(157,207,210,0.12), transparent 20%),
-        linear-gradient(180deg, var(--bg), #f1e8e5 100%);
+        radial-gradient(circle at 15% 14%, rgba(240,109,111,0.13), transparent 18%),
+        radial-gradient(circle at 85% 10%, rgba(141,212,213,0.12), transparent 18%),
+        linear-gradient(180deg, #121214, #17181a 100%);
       color: var(--ink);
     }
 
     a { color: inherit; }
-
     button, input, textarea { font: inherit; }
 
     .app {
-      width: min(1240px, calc(100% - 26px));
+      width: min(1280px, calc(100% - 28px));
       margin: 22px auto 40px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.38);
-      border-radius: 32px;
+      background: rgba(24, 23, 27, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 30px;
       box-shadow: var(--shadow);
       overflow: hidden;
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
     }
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding: 18px 28px;
-      background: rgba(255,255,255,0.72);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      gap: 20px;
+      padding: 18px 26px;
+      background: rgba(19,19,22,0.92);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
     }
 
     .brand {
@@ -76,9 +74,9 @@
       align-items: center;
       gap: 12px;
       font-size: 12px;
-      font-weight: 900;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      font-weight: 900;
     }
 
     .brand-mark {
@@ -86,8 +84,8 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #f3a098);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7);
     }
 
     .brand-mark::before {
@@ -95,119 +93,109 @@
       position: absolute;
       inset: 9px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.86);
     }
 
     .nav {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .nav a {
       text-decoration: none;
       color: var(--muted);
-      background: transparent;
       padding: 9px 12px;
-      border: 1px solid transparent;
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      border: 1px solid transparent;
+      font-size: 11px;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
+      font-weight: 800;
       transition: 0.2s ease;
     }
 
     .nav a:hover,
     .nav a.active {
-      color: var(--ink);
       background: rgba(240,109,111,0.08);
-      border-color: rgba(240,109,111,0.12);
+      color: var(--ink);
+      border-color: rgba(240,109,111,0.2);
     }
 
-    .content {
-      padding: 28px;
+    .page {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+      gap: 22px;
+      padding: 24px;
+    }
+
+    .main {
       display: grid;
       gap: 20px;
     }
 
-    .tab-panel {
-      display: none;
-      width: 100%;
-      min-height: 640px;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-    }
-
     .panel {
-      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(35,33,38,0.94), rgba(34,32,38,0.92));
+      border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      background: rgba(255,255,255,0.7);
-      box-shadow: 0 14px 28px rgba(24, 18, 16, 0.04);
-      padding: 24px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+      overflow: hidden;
     }
 
-    .hero {
-      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(245,231,226,0.8));
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 680px;
+    .hero-panel {
+      padding: 24px 24px 22px;
+      display: grid;
+      gap: 18px;
     }
 
     .eyebrow {
-      width: fit-content;
       display: inline-flex;
+      width: fit-content;
       align-items: center;
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(240,109,111,0.08);
-      border: 1px solid rgba(240,109,111,0.12);
-      color: #a54d4d;
-      font-size: 11px;
-      font-weight: 900;
+      background: rgba(240,109,111,0.09);
+      border: 1px solid rgba(240,109,111,0.16);
+      color: #ffb9b8;
+      font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      font-weight: 900;
     }
 
-    h1 {
-      margin: 18px 0 0;
-      font-size: clamp(2.8rem, 5vw, 5.3rem);
+    .hero-copy {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.96;
       letter-spacing: -0.08em;
-      line-height: 0.95;
     }
 
-    .hero p {
-      margin: 18px 0 0;
+    .hero-copy p {
+      margin: 0;
       color: var(--muted);
-      font-size: 1.04rem;
       line-height: 1.8;
-      max-width: 62ch;
+      max-width: 60ch;
+    }
+
+    .entry-box {
+      display: grid;
+      gap: 12px;
     }
 
     textarea, input {
       width: 100%;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 16px 18px;
+      background: rgba(18, 17, 20, 0.8);
       color: var(--ink);
+      padding: 16px 18px;
       outline: none;
       transition: 0.2s ease;
     }
@@ -218,7 +206,7 @@
     }
 
     textarea {
-      min-height: 200px;
+      min-height: 180px;
       resize: vertical;
       line-height: 1.7;
     }
@@ -227,7 +215,7 @@
       display: grid;
       grid-template-rows: 0fr;
       opacity: 0;
-      transition: grid-template-rows 0.28s ease, opacity 0.2s ease, margin 0.2s ease;
+      transition: all 0.28s ease;
       overflow: hidden;
       margin-top: 0;
     }
@@ -235,7 +223,7 @@
     .secret-box.open {
       grid-template-rows: 1fr;
       opacity: 1;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .secret-box-inner {
@@ -250,24 +238,21 @@
       align-items: center;
     }
 
-    .secret-inline input {
-      flex: 1 1 220px;
-    }
+    .secret-inline input { flex: 1 1 220px; }
 
-    .meta {
+    .bottom-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      align-items: center;
+      gap: 16px;
       flex-wrap: wrap;
-      margin-top: 18px;
     }
 
     .count {
       color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 900;
-      letter-spacing: 0.09em;
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      font-weight: 800;
       text-transform: uppercase;
     }
 
@@ -279,43 +264,219 @@
     }
 
     .button {
-      padding: 13px 18px;
-      border-radius: 999px;
+      appearance: none;
       border: none;
       cursor: pointer;
+      padding: 13px 18px;
+      border-radius: 999px;
       font-weight: 800;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 14px 20px rgba(28,20,17,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.16);
     }
 
     .button:hover { transform: translateY(-1px); }
 
     .button.primary {
-      background: linear-gradient(135deg, var(--dark), #483837);
+      background: linear-gradient(135deg, var(--accent), #ef9d97);
       color: white;
     }
 
     .button.secondary {
-      background: linear-gradient(135deg, var(--accent), #ee9f96);
+      background: linear-gradient(135deg, #2c2a2f, #3a383e);
       color: white;
     }
 
     .button.ghost {
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.04);
       color: var(--ink);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       box-shadow: none;
     }
 
     .message {
       min-height: 22px;
-      margin-top: 12px;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       font-weight: 700;
+      line-height: 1.5;
     }
 
     .message.error { color: var(--danger); }
     .message.success { color: var(--success); }
+
+    .feed {
+      display: grid;
+      gap: 18px;
+    }
+
+    .feed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 4px 0;
+    }
+
+    .feed-header h2 {
+      margin: 0;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .sort {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .post {
+      background: linear-gradient(180deg, rgba(39,36,43,0.95), rgba(31,29,35,0.94));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 14px;
+      box-shadow: 0 14px 26px rgba(0,0,0,0.12);
+      transition: transform 0.22s ease, border-color 0.2s ease, box-shadow 0.22s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-3px);
+      border-color: rgba(240,109,111,0.2);
+      box-shadow: 0 18px 32px rgba(0,0,0,0.18);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-weight: 900;
+      font-size: 0.81rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.75);
+    }
+
+    .author-meta strong {
+      display: block;
+      font-size: 0.96rem;
+    }
+
+    .author-meta span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.73rem;
+      margin-top: 2px;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.09em;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: rgba(240,109,111,0.08);
+      color: #ffd0cf;
+      border: 1px solid rgba(240,109,111,0.16);
+    }
+
+    .post-body {
+      display: grid;
+      gap: 14px;
+    }
+
+    .post-title {
+      margin: 0;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      letter-spacing: -0.05em;
+      line-height: 1.1;
+    }
+
+    .post-excerpt {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .post-visual {
+      min-height: 180px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(240,109,111,0.14), rgba(141,212,213,0.12)),
+        linear-gradient(140deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-visual::before,
+    .post-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .post-visual::before {
+      width: 180px;
+      height: 180px;
+      right: -28px;
+      top: -28px;
+      background: rgba(240,109,111,0.18);
+    }
+
+    .post-visual::after {
+      width: 200px;
+      height: 200px;
+      left: -30px;
+      bottom: -44px;
+      background: rgba(141,212,213,0.12);
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.77rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
 
     .sidebar {
       display: grid;
@@ -323,328 +484,149 @@
       align-content: start;
     }
 
-    .mini-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(242,232,227,0.8));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 18px 20px;
+    .side-card {
+      background: linear-gradient(180deg, rgba(35,33,39,0.94), rgba(29,28,33,0.94));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 16px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.1);
     }
 
-    .mini-card h3 {
-      margin: 0 0 12px;
+    .side-card h3 {
+      margin: 0 0 14px;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 900;
     }
 
-    .mini-card p {
+    .side-card p {
       margin: 0;
       color: var(--muted);
       line-height: 1.7;
     }
 
-    .stats {
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(90px, 1fr));
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
       gap: 12px;
     }
 
     .stat {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.58);
+      border: 1px solid var(--line);
       border-radius: 16px;
+      background: rgba(255,255,255,0.02);
       padding: 12px 10px;
     }
 
     .stat strong {
       display: block;
-      margin-bottom: 2px;
-      font-size: 1.15rem;
+      margin-bottom: 4px;
+      font-size: 1.22rem;
     }
 
     .stat span {
+      font-size: 0.72rem;
       color: var(--muted);
-      font-size: 0.74rem;
     }
 
-    .club-panel {
-      display: grid;
-      gap: 20px;
-    }
-
-    .club-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(255,255,255,0.74), rgba(239,228,223,0.74));
-      border-radius: var(--radius-lg);
-      padding: 18px 20px;
-    }
-
-    .avatar {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 1.7rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
-    }
-
-    .club-header h2 {
-      margin: 0;
-      font-size: clamp(1.6rem, 2vw, 2.2rem);
-      letter-spacing: -0.06em;
-    }
-
-    .club-header p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .board {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 20px;
-    }
-
-    .mail-box, .gossip-box, .facts-box, .schedule-box, .admin-box {
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 18px 20px;
-    }
-
-    .mail-box h3, .gossip-box h3, .facts-box h3, .schedule-box h3, .admin-box h3 {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 900;
-    }
-
-    .mail-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .mini-gossip {
       display: grid;
       gap: 10px;
     }
 
-    .mail-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
-    }
-
-    .mail-item strong {
-      font-size: 0.94rem;
-      word-break: break-all;
-    }
-
-    .mail-badge {
-      white-space: nowrap;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(157,207,210,0.5);
-      background: rgba(157,207,210,0.14);
-      color: #2a6d70;
-    }
-
-    .gossip-box {
-      display: grid;
-      gap: 14px;
-    }
-
-    .prompt {
-      padding: 18px;
-      background: rgba(240,109,111,0.06);
-      border: 1px solid rgba(240,109,111,0.12);
-      border-radius: 16px;
-      color: #553b3a;
-      font-weight: 600;
-      line-height: 1.7;
-    }
-
-    .facts-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(120px, 1fr));
-      gap: 12px;
-    }
-
-    .fact {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 10px;
-      background: rgba(255,255,255,0.74);
-    }
-
-    .fact strong {
+    .gossip-pill {
       display: block;
-      font-size: 1.3rem;
-      margin-bottom: 4px;
-    }
-
-    .fact span {
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .gossip-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .gossip-item {
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--border);
       border-radius: 14px;
-      color: #43393a;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      padding: 12px 14px;
+      color: #f0d5ce;
       line-height: 1.7;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
     }
 
     .schedule-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
+      margin-top: 10px;
     }
 
     .schedule-item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
       padding: 12px 14px;
     }
 
     .schedule-item strong {
       display: block;
       margin-bottom: 4px;
-      font-size: 1rem;
+      font-size: 0.97rem;
     }
 
     .schedule-item small {
-      display: block;
       color: var(--muted);
+      display: block;
       margin-bottom: 6px;
+      font-size: 0.72rem;
     }
 
     .schedule-item p {
       margin: 0;
-      color: #433b39;
       line-height: 1.6;
+      color: #eeded8;
     }
 
-    .section-badge {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .secret-wrap {
+    .club-box {
       display: grid;
-      gap: 16px;
-    }
-
-    .secret-box-card {
-      display: none;
-      background: linear-gradient(180deg, rgba(255,255,255,0.74), rgba(240,228,225,0.76));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-    }
-
-    .secret-box-card.active {
-      display: block;
-    }
-
-    .secret-text {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
-
-    .admin-login, .admin-panel {
-      display: grid;
-      gap: 12px;
-    }
-
-    .admin-note {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .split {
-      display: flex;
       gap: 10px;
-      flex-wrap: wrap;
     }
 
-    .split > * { flex: 1 1 200px; }
-
-    .hidden {
-      display: none !important;
+    .club-box input, .club-box textarea {
+      width: 100%;
     }
 
-    @media (max-width: 920px) {
-      .hero-grid,
-      .board {
+    .club-box textarea { min-height: 120px; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .page {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 620px) {
       .topbar {
         padding: 14px 18px;
       }
-
-      .nav {
-        display: none;
-      }
-
-      .content {
-        padding: 18px;
-      }
-
-      .panel {
-        padding: 18px;
-      }
-
-      .button-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button-row .button,
-      .button {
-        width: 100%;
-      }
-
-      .club-header {
-        align-items: flex-start;
-      }
+      .nav { display: none; }
+      .page { padding: 18px; }
+      .hero-panel { padding: 18px; }
+      .button-row, .bottom-row { flex-direction: column; align-items: stretch; }
+      .button-row .button, .button { width: 100%; }
     }
   </style>
 </head>
@@ -655,205 +637,236 @@
         <span class="brand-mark"></span>
         <span>Club de Fofocas</span>
       </div>
+
       <nav class="nav" aria-label="Navegação principal">
-        <a href="#entrada" class="tab-link active">Entrada</a>
-        <a href="#clube" class="tab-link">Clube</a>
-        <a href="#curiosidades" class="tab-link">Curiosidades</a>
-        <a href="#secreto" class="tab-link">Texto secreto</a>
-        <a href="#admin" class="tab-link">Admin</a>
+        <a href="#feed" class="active">Feed</a>
+        <a href="#secreto">Texto secreto</a>
+        <a href="#curiosidades">Curiosidades</a>
+        <a href="#admin">Admin</a>
       </nav>
     </header>
 
-    <main class="content">
-      <section id="entrada" class="tab-panel active">
-        <div class="hero-grid">
-          <div class="panel hero">
-            <div class="eyebrow">Acesso exclusivo</div>
+    <main class="page">
+      <section class="main" id="feed">
+        <div class="panel hero-panel">
+          <div class="eyebrow">Acesso exclusivo</div>
+
+          <div class="hero-copy">
             <h1>Entre no círculo. <br>Fale o suficiente. <br>Entre no caos.</h1>
             <p>
-              Para entrar no clube, escreves um texto pessoal com pelo menos 500 letras.
-              Depois, o teu perfil ganha um nome secreto, um grupo de emails personalizados e uma mini fofoca que tens de decorar para confirmar o acesso completo.
+              Para entrar no clube, escreves um texto pessoal com pelo menos 500 letras. Depois, o teu perfil ganha um nome secreto, uma caixa de emails e uma mini fofoca que tens de memorizar para validar o acesso.
             </p>
-
-            <div class="secret-box" id="secretBox" aria-live="polite">
-              <div class="secret-box-inner">
-                <div class="secret-inline">
-                  <input id="secretInput" type="text" placeholder="Escreve o teu texto secreto..." />
-                  <button id="secretSubmit" type="button" class="button ghost">Validar</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="button-row" style="margin-top:18px;">
-              <button id="secretToggle" type="button" class="button secondary">Aceder com texto secreto</button>
-            </div>
-
-            <textarea id="entryText" placeholder="Escreve o teu convite, a tua inscrição, o teu texto de entrada..." style="margin-top:18px;"></textarea>
-
-            <div class="meta">
-              <span id="charCount" class="count">0 / 500</span>
-              <button id="enterBtn" type="button" class="button primary">Entrar no clube</button>
-            </div>
-
-            <div id="entryMessage" class="message"></div>
           </div>
 
-          <aside class="sidebar">
-            <div class="mini-card">
-              <h3>Resumo</h3>
-              <div class="stats">
-                <div class="stat">
-                  <strong>500+</strong>
-                  <span>letras mín.</span>
-                </div>
-                <div class="stat">
-                  <strong>1</strong>
-                  <span>mini fofoca</span>
-                </div>
-                <div class="stat">
-                  <strong>3</strong>
-                  <span>grupos</span>
-                </div>
-                <div class="stat">
-                  <strong>24/7</strong>
-                  <span>rumores</span>
-                </div>
+          <div class="secret-box" id="secretBox" aria-live="polite">
+            <div class="secret-box-inner">
+              <div class="secret-inline">
+                <input id="secretInput" type="text" placeholder="Escreve o teu texto secreto..." />
+                <button type="button" class="button ghost" id="secretSubmit">Validar</button>
               </div>
             </div>
+          </div>
 
-            <div class="mini-card">
-              <h3>Regra do clube</h3>
-              <p>
-                O perfil é secreto. O texto precisa convencer. A fofoca precisa ser lembrada.
-                Quem entra, fica.
-              </p>
-            </div>
-          </aside>
+          <div class="button-row">
+            <button type="button" class="button secondary" id="secretToggle">Aceder com texto secreto</button>
+          </div>
+
+          <div class="entry-box">
+            <textarea id="entryText" placeholder="Escreve o teu convite, a tua inscrição, o teu texto de entrada..."></textarea>
+          </div>
+
+          <div class="bottom-row">
+            <span id="charCount" class="count">0 / 500</span>
+            <button type="button" class="button primary" id="enterBtn">Entrar no clube</button>
+          </div>
+
+          <div id="entryMessage" class="message"></div>
         </div>
+
+        <div class="feed-header">
+          <h2>Feed do clube</h2>
+          <div class="sort">Mais recentes</div>
+        </div>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="author">
+              <div class="author-avatar">V</div>
+              <div class="author-meta">
+                <strong>Violeta Nox</strong>
+                <span>há 2h • privado</span>
+              </div>
+            </div>
+            <div class="badge">Rumor</div>
+          </div>
+
+          <div class="post-body">
+            <h3 class="post-title">A varanda do terceiro andar ainda sabe o que ninguém disse em voz alta.</h3>
+            <p class="post-excerpt">
+              Foi sentada a conversa mais curta da semana: uma nova visita, um nome trocado, um sorriso que não saiu do rosto de quem ficou depois da porta fechar.
+            </p>
+            <div class="post-visual"></div>
+          </div>
+
+          <div class="post-meta">
+            <div class="post-actions">
+              <span>♡ 482</span>
+              <span>💬 63</span>
+              <span>↻ 21</span>
+            </div>
+            <div class="badge">#gossip</div>
+          </div>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="author">
+              <div class="author-avatar">L</div>
+              <div class="author-meta">
+                <strong>Luna Dourada</strong>
+                <span>há 5h • corações</span>
+              </div>
+            </div>
+            <div class="badge">Notícia</div>
+          </div>
+
+          <div class="post-body">
+            <h3 class="post-title">O convite do jantar tinha data falsa e um motivo muito mais bonito do que parecia.</h3>
+            <p class="post-excerpt">
+              Ninguém admite, mas a mesa ficou a olhar para a mesma porta durante a noite inteira. Alguém percebeu, e foi isso que deixou tudo mais quente do que devia.
+            </p>
+            <div class="post-visual" style="background: linear-gradient(135deg, rgba(244,178,157,0.18), rgba(141,212,213,0.12)), linear-gradient(140deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));"></div>
+          </div>
+
+          <div class="post-meta">
+            <div class="post-actions">
+              <span>♡ 630</span>
+              <span>💬 94</span>
+              <span>↻ 29</span>
+            </div>
+            <div class="badge">#convite</div>
+          </div>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="author">
+              <div class="author-avatar">C</div>
+              <div class="author-meta">
+                <strong>Clara Morsa</strong>
+                <span>há 1d • murmúrio</span>
+              </div>
+            </div>
+            <div class="badge">Bastidores</div>
+          </div>
+
+          <div class="post-body">
+            <h3 class="post-title">A porta do corredor fechou antes do café e ninguém percebeu que o silêncio falou primeiro.</h3>
+            <p class="post-excerpt">
+              Um piscar de olhos, um copo pousado sem som, a chegada de duas pessoas em momentos diferentes. E a história inteira foi recontada em meia dúzia de frases que ninguém conseguiu apagar depois.
+            </p>
+            <div class="post-visual" style="background: linear-gradient(135deg, rgba(141,212,213,0.18), rgba(240,109,111,0.12)), linear-gradient(140deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));"></div>
+          </div>
+
+          <div class="post-meta">
+            <div class="post-actions">
+              <span>♡ 511</span>
+              <span>💬 71</span>
+              <span>↻ 17</span>
+            </div>
+            <div class="badge">#murmurio</div>
+          </div>
+        </article>
       </section>
 
-      <section id="clube" class="tab-panel">
-        <div class="panel club-panel">
-          <div class="club-header">
-            <div id="avatar" class="avatar">F</div>
-            <div>
-              <h2 id="profileName">Perfil secreto</h2>
-              <p id="profileDescription">Entraste no clube. Agora memoriza a fofoca do teu perfil para fechar a confirmação.</p>
-            </div>
-          </div>
-
-          <div class="board">
-            <div class="mail-box">
-              <h3>Grupo de emails personalizados</h3>
-              <ul id="mailList" class="mail-list"></ul>
-            </div>
-
-            <div class="gossip-box">
-              <h3>Mini fofoca do perfil</h3>
-              <div id="miniGossip" class="prompt"></div>
-              <input id="gossipAnswer" type="text" placeholder="Reescreve a mini fofoca exata" />
-              <div class="button-row">
-                <button id="gossipCheckBtn" type="button" class="button secondary">Validar fofoca</button>
-                <button id="resetBtn" type="button" class="button ghost">Voltar</button>
-              </div>
-              <div id="gossipResult" class="message"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="curiosidades" class="tab-panel">
-        <div class="panel facts-box" style="min-height: 680px;">
-          <h3>Curiosidades do clube</h3>
-
-          <div class="facts-grid" style="margin-top: 8px;">
-            <div class="fact">
+      <aside class="sidebar">
+        <div class="side-card">
+          <h3>Status do clube</h3>
+          <div class="stats-grid">
+            <div class="stat">
               <strong id="peopleCount">127</strong>
-              <span>pessoas já entraram</span>
+              <span>pessoas hoje</span>
             </div>
-            <div class="fact">
+            <div class="stat">
               <strong>19</strong>
-              <span>grupos activos</span>
+              <span>grupos</span>
             </div>
-            <div class="fact">
+            <div class="stat">
               <strong>3</strong>
-              <span>horários fixos</span>
+              <span>horários</span>
             </div>
-            <div class="fact">
+            <div class="stat">
               <strong>8</strong>
-              <span>mistérios em aberto</span>
+              <span>mistérios</span>
             </div>
           </div>
+        </div>
 
-          <div style="margin-top: 22px;">
-            <div class="section-badge">Mini fofocas</div>
-            <div class="gossip-list" id="curiosityList"></div>
-          </div>
+        <div class="side-card">
+          <h3>Mini fofocas</h3>
+          <div class="mini-gossip" id="miniGossipList"></div>
+        </div>
 
-          <div style="margin-top: 22px;">
-            <div class="section-badge">Horários</div>
-            <div class="schedule-list" id="curiositySchedules"></div>
+        <div class="side-card">
+          <h3>Tags</h3>
+          <div class="tag-list">
+            <span class="tag">#rumor</span>
+            <span class="tag">#bastidores</span>
+            <span class="tag">#cozinha</span>
+            <span class="tag">#vestíbulo</span>
+            <span class="tag">#corredor</span>
+            <span class="tag">#noite</span>
           </div>
         </div>
-      </section>
 
-      <section id="secreto" class="tab-panel">
-        <div class="panel secret-wrap">
-          <div class="section-badge">Texto secreto</div>
-          <p style="margin:0; color:var(--muted); line-height:1.7;">
-            Este espaço foi feito para conter a mensagem escondida do clube. Sem código, não abre. Sem curiosidade, não entra em silêncio.
-          </p>
+        <div class="side-card">
+          <h3>Horários</h3>
+          <div class="schedule-list" id="scheduleSidebar"></div>
+        </div>
 
-          <div class="secret-inline">
+        <div class="side-card" id="secreto">
+          <h3>Texto secreto</h3>
+          <div class="club-box">
             <input id="secretAccessInput" type="text" placeholder="Escreve a frase secreta..." />
-            <button id="secretAccessBtn" type="button" class="button secondary">Abrir texto secreto</button>
-          </div>
-
-          <div id="secretAccessMessage" class="message"></div>
-
-          <div id="secretTextBox" class="secret-box-card">
-            <h4 style="margin:0 0 10px; font-size:1.1rem; letter-spacing:-0.04em;">Mensagem secreta</h4>
-            <p id="secretText" class="secret-text"></p>
+            <button type="button" class="button secondary" id="secretAccessBtn">Abrir texto secreto</button>
+            <div id="secretAccessMessage" class="message"></div>
+            <div id="secretTextBox" class="secret-box-card hidden" style="display:none; background: rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:14px; padding:12px 14px;">
+              <p id="secretText" style="margin:0; color: var(--muted); line-height:1.8; white-space:pre-wrap;"></p>
+            </div>
           </div>
         </div>
-      </section>
 
-      <section id="admin" class="tab-panel">
-        <div class="panel admin-box">
-          <h3>Admin do clube</h3>
-
-          <div id="adminLoginForm" class="admin-login">
+        <div class="side-card" id="admin">
+          <h3>Admin</h3>
+          <div id="adminLoginForm" class="club-box">
             <input id="adminUser" type="text" placeholder="Usuário" />
             <input id="adminPass" type="password" placeholder="Senha" />
-            <button id="adminLoginBtn" type="button" class="button secondary">Entrar como admin</button>
+            <button type="button" class="button secondary" id="adminLoginBtn">Entrar como admin</button>
             <div id="adminLoginMessage" class="message error"></div>
           </div>
 
-          <div id="adminPanel" class="admin-panel hidden">
-            <p class="admin-note">Gere horários e descrições dos encontros do clube.</p>
-
-            <div class="split">
-              <input id="scheduleTitle" type="text" placeholder="Título do horário" />
-              <input id="scheduleTime" type="text" placeholder="Ex.: 20:30" />
-            </div>
-
+          <div id="adminPanel" class="club-box hidden">
+            <p style="margin:0; color: var(--muted); line-height:1.7;">Gere horários e descrições dos encontros do clube.</p>
+            <input id="scheduleTitle" type="text" placeholder="Título do horário" />
+            <input id="scheduleTime" type="text" placeholder="Ex.: 20:30" />
             <textarea id="scheduleDescription" placeholder="Descrição do encontro..."></textarea>
-            <button id="saveScheduleBtn" type="button" class="button primary">Salvar horário</button>
-
+            <button type="button" class="button primary" id="saveScheduleBtn">Salvar horário</button>
             <div id="scheduleList" class="schedule-list"></div>
           </div>
         </div>
-      </section>
+      </aside>
     </main>
   </div>
 
   <script>
-    const tabs = Array.from(document.querySelectorAll('.tab-link'));
-    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+    const accessStorageKey = 'clubAccess';
+    const scheduleStorageKey = 'clubSchedules';
+    const secretCode = 'murmurio-secreto-clube';
+    const secretMessage = '“silêncio é o primeiro rumor que te faz entrar” — e é por isso que o clube nunca fala alto o suficiente para te deixar ir sem pensar duas vezes.';
 
     const entryText = document.getElementById('entryText');
-    const entryMessage = document.getElementById('entryMessage');
     const charCount = document.getElementById('charCount');
+    const entryMessage = document.getElementById('entryMessage');
     const enterBtn = document.getElementById('enterBtn');
 
     const secretToggle = document.getElementById('secretToggle');
@@ -861,79 +874,37 @@
     const secretInput = document.getElementById('secretInput');
     const secretSubmit = document.getElementById('secretSubmit');
 
-    const clubPanel = document.getElementById('clube');
-    const profileName = document.getElementById('profileName');
-    const profileDescription = document.getElementById('profileDescription');
-    const avatar = document.getElementById('avatar');
-    const mailList = document.getElementById('mailList');
-    const miniGossip = document.getElementById('miniGossip');
-    const gossipAnswer = document.getElementById('gossipAnswer');
-    const gossipCheckBtn = document.getElementById('gossipCheckBtn');
-    const gossipResult = document.getElementById('gossipResult');
-    const resetBtn = document.getElementById('resetBtn');
-
     const secretAccessInput = document.getElementById('secretAccessInput');
     const secretAccessBtn = document.getElementById('secretAccessBtn');
     const secretAccessMessage = document.getElementById('secretAccessMessage');
     const secretTextBox = document.getElementById('secretTextBox');
     const secretText = document.getElementById('secretText');
 
+    const miniGossipList = document.getElementById('miniGossipList');
+    const scheduleSidebar = document.getElementById('scheduleSidebar');
     const adminLoginForm = document.getElementById('adminLoginForm');
     const adminPanel = document.getElementById('adminPanel');
     const adminUser = document.getElementById('adminUser');
     const adminPass = document.getElementById('adminPass');
     const adminLoginBtn = document.getElementById('adminLoginBtn');
     const adminLoginMessage = document.getElementById('adminLoginMessage');
-
     const scheduleTitle = document.getElementById('scheduleTitle');
     const scheduleTime = document.getElementById('scheduleTime');
     const scheduleDescription = document.getElementById('scheduleDescription');
     const saveScheduleBtn = document.getElementById('saveScheduleBtn');
     const scheduleList = document.getElementById('scheduleList');
 
-    const curiousList = document.getElementById('curiosityList');
-    const curiositySchedules = document.getElementById('curiositySchedules');
-
-    const accessStorageKey = 'clubAccess';
-    const scheduleStorageKey = 'clubSchedules';
-
-    const secretCode = 'murmurio-secreto-clube';
-    const secretMessage = '“silêncio é o primeiro rumor que te faz entrar” — e é por isso que o clube nunca fala alto o suficiente para te deixar ir sem pensar duas vezes.';
-
-    const profiles = [
-      {
-        name: 'Violeta Nox',
-        description: 'Mistério da varanda, alérgica a reputações fáceis.',
-        gossip: 'Violeta foi vista trocando olhares com a nova vizinha antes da reunião de quinta.'
-      },
-      {
-        name: 'Luna Dourada',
-        description: 'A dona dos comentários mais bonitos e mais perigosos.',
-        gossip: 'Luna riu tanto que a própria portaria resolveu contar o rumor do terceiro andar.'
-      },
-      {
-        name: 'Clara Morsa',
-        description: 'Sabe o que acontece antes de todo mundo saber.',
-        gossip: 'Clara avisou primeiro que o convite do jantar tinha uma data falsa e um motivo oculto.'
-      },
-      {
-        name: 'Milo Corvo',
-        description: 'Os recados chegam antes do café.',
-        gossip: 'Milo disse que o quarto leste recebeu visita inesperada e saiu da noite sem deixar rastros.'
-      }
-    ];
-
-    const curiosityItems = [
-      'A porta do clube só abre para quem escreve algo que se lembre de si mesmo.',
-      'Há sempre uma pessoa a mais a cada noite de reunião, sem que ninguém se lembre de quem foi.',
-      'O ruído mais forte do clube não é de vozes, mas de silêncio bem colocado.',
-      'As últimas entradas foram sempre em noites com chuva, café e uma janela entreaberta.'
+    const gossipPills = [
+      'A porta do corredor abriu antes do café e fechou depois, como se alguém tivesse saído sem querer ser visto.',
+      'A mesa do fundo já conhece um último nomes antes de qualquer reunião começar.',
+      'A nova vizinha recebeu um convite escrito em letra quase indecifrável e uma noite inteira de atenção.',
+      'Ninguém consegue dizer quem viajou primeiro, mas o rumor chegou antes da manhã.'
     ];
 
     const defaultSchedules = [
-      { title: 'Reunião do corredor', time: '20:30', description: 'A conversa fica moreira e a fofoca vira rumor antes do fim do chá.' },
-      { title: 'Sussurros do pátio', time: '22:00', description: 'Rituais de leitura, olhares curtos e uma nova teoria por pessoa.' },
-      { title: 'Noite de bastidores', time: '23:15', description: 'Os relatos mais curiosos chegam em voz baixa, como se o edifício escutasse.' }
+      { title: 'Reunião do corredor', time: '20:30', description: 'A conversa fica mais quente e o rumor chega antes do chá.' },
+      { title: 'Sussurros do pátio', time: '22:00', description: 'Histórias curtas, risos contidos e uma teoria por pessoa.' },
+      { title: 'Noite de bastidores', time: '23:15', description: 'Os relatos mais curiosos chegam em voz baixa, como se o prédio escutasse.' }
     ];
 
     function setMessage(element, text, type) {
@@ -947,25 +918,6 @@
     function normalize(value) {
       return (value || '').toString().toLowerCase().replace(/\s+/g, ' ').trim();
     }
-
-    function activateTab(targetId) {
-      tabs.forEach(tab => {
-        const isMatch = tab.getAttribute('href') === '#' + targetId;
-        tab.classList.toggle('active', isMatch);
-      });
-
-      panels.forEach(panel => {
-        panel.classList.toggle('active', panel.id === targetId);
-      });
-    }
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', (event) => {
-        event.preventDefault();
-        const targetId = tab.getAttribute('href').replace('#', '');
-        activateTab(targetId);
-      });
-    });
 
     function updateCounter() {
       const length = entryText.value.trim().length;
@@ -982,186 +934,33 @@
       return true;
     }
 
-    function openClub() {
-      if (!validateEntry()) return;
-
-      const profile = profiles[Math.floor(Math.random() * profiles.length)];
-      profileName.textContent = profile.name;
-      profileDescription.textContent = profile.description;
-      avatar.textContent = profile.name.charAt(0).toUpperCase();
-
-      const sanitized = profile.name.toLowerCase().replace(/\s+/g, '');
-      const emails = [
-        `${profile.name.toLowerCase().replace(/\s+/g, '.')}@fofocas.club`,
-        `${sanitized}@rumorbox.io`,
-        `bastidores.${sanitized}@club.io`,
-        `murmurios@${sanitized}.club`
-      ];
-
-      mailList.innerHTML = '';
-      emails.forEach((email, index) => {
-        const li = document.createElement('li');
-        li.className = 'mail-item';
-
-        const strong = document.createElement('strong');
-        strong.textContent = email;
-
-        const badge = document.createElement('span');
-        badge.className = 'mail-badge';
-        badge.textContent = index === 0 ? 'ativo' : 'grupo';
-
-        li.appendChild(strong);
-        li.appendChild(badge);
-        mailList.appendChild(li);
-      });
-
-      miniGossip.textContent = profile.gossip;
-      gossipAnswer.value = '';
-      gossipResult.textContent = '';
-
-      activateTab('clube');
-
-      try {
-        localStorage.setItem(accessStorageKey, JSON.stringify({ unlocked: true, profile }));
-      } catch (error) {
-        console.warn('Não foi possível guardar o estado do clube.', error);
-      }
-    }
-
-    function restoreState() {
-      try {
-        const raw = localStorage.getItem(accessStorageKey);
-        if (!raw) return;
-        const parsed = JSON.parse(raw);
-        if (parsed && parsed.unlocked && parsed.profile) {
-          const profile = parsed.profile;
-          profileName.textContent = profile.name;
-          profileDescription.textContent = profile.description;
-          avatar.textContent = profile.name.charAt(0).toUpperCase();
-          miniGossip.textContent = profile.gossip;
-
-          const sanitized = profile.name.toLowerCase().replace(/\s+/g, '');
-          const emails = [
-            `${profile.name.toLowerCase().replace(/\s+/g, '.')}@fofocas.club`,
-            `${sanitized}@rumorbox.io`,
-            `bastidores.${sanitized}@club.io`,
-            `murmurios@${sanitized}.club`
-          ];
-
-          mailList.innerHTML = '';
-          emails.forEach((email, index) => {
-            const li = document.createElement('li');
-            li.className = 'mail-item';
-            const strong = document.createElement('strong');
-            strong.textContent = email;
-            const badge = document.createElement('span');
-            badge.className = 'mail-badge';
-            badge.textContent = index === 0 ? 'ativo' : 'grupo';
-            li.appendChild(strong);
-            li.appendChild(badge);
-            mailList.appendChild(li);
-          });
-        }
-      } catch (error) {
-        console.warn('Erro ao restaurar acesso:', error);
-      }
-    }
-
-    gossipCheckBtn.addEventListener('click', () => {
-      const expected = normalize(miniGossip.textContent);
-      const userValue = normalize(gossipAnswer.value);
-
-      if (!userValue) {
-        setMessage(gossipResult, 'Escreve a mini fofoca para validar.', 'error');
-        return;
-      }
-
-      if (userValue === expected) {
-        setMessage(gossipResult, 'Acesso confirmado. Você memorizou a fofoca do perfil.', 'success');
-      } else {
-        setMessage(gossipResult, 'Não bateu. Tenta lembrar melhor a frase exata.', 'error');
-      }
-    });
-
-    resetBtn.addEventListener('click', () => {
-      entryText.value = '';
-      gossipAnswer.value = '';
-      entryMessage.textContent = '';
-      gossipResult.textContent = '';
-      updateCounter();
-      activateTab('entrada');
-    });
-
-    secretToggle.addEventListener('click', () => {
-      secretBox.classList.toggle('open');
-      if (secretBox.classList.contains('open')) {
-        setTimeout(() => secretInput.focus(), 80);
-      }
-    });
-
-    secretSubmit.addEventListener('click', () => {
-      const value = secretInput.value.trim();
-      if (!value) {
-        setMessage(entryMessage, 'Escreve um texto secreto para validar.', 'error');
-        return;
-      }
-
-      if (normalize(value) === normalize(secretCode)) {
-        secretBox.classList.remove('open');
-        secretInput.value = '';
-        setMessage(entryMessage, 'Texto secreto confirmado.', 'success');
-        activateTab('secreto');
-      } else {
-        setMessage(entryMessage, 'Esse texto secreto não combina com o clube.', 'error');
-      }
-    });
-
-    secretAccessBtn.addEventListener('click', () => {
-      const value = secretAccessInput.value.trim();
-      if (!value) {
-        setMessage(secretAccessMessage, 'Escreve a frase secreta.', 'error');
-        return;
-      }
-
-      if (normalize(value) === normalize(secretCode)) {
-        secretText.textContent = secretMessage;
-        secretTextBox.classList.add('active');
-        setMessage(secretAccessMessage, 'Chave válida. Texto secreto revelado.', 'success');
-      } else {
-        secretTextBox.classList.remove('active');
-        setMessage(secretAccessMessage, 'Frase incorreta. Só o clube a conhece.', 'error');
-      }
-    });
-
-    function renderCuriosityList() {
-      curiousList.innerHTML = '';
-      curiosityItems.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'gossip-item';
-        row.textContent = item;
-        curiousList.appendChild(row);
+    function renderMiniGossip() {
+      miniGossipList.innerHTML = '';
+      gossipPills.forEach(item => {
+        const node = document.createElement('div');
+        node.className = 'gossip-pill';
+        node.textContent = item;
+        miniGossipList.appendChild(node);
       });
     }
 
-    function renderCuriositySchedules() {
+    function renderSchedulesSidebar() {
       const saved = JSON.parse(localStorage.getItem(scheduleStorageKey) || '[]');
-      const itemList = saved.length ? saved : defaultSchedules;
-      curiositySchedules.innerHTML = '';
-
-      itemList.forEach(item => {
+      const items = saved.length ? saved : defaultSchedules;
+      scheduleSidebar.innerHTML = '';
+      items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'schedule-item';
         card.innerHTML = `<strong>${item.title}</strong><small>${item.time}</small><p>${item.description}</p>`;
-        curiositySchedules.appendChild(card);
+        scheduleSidebar.appendChild(card);
       });
     }
 
     function renderSchedules() {
       const saved = JSON.parse(localStorage.getItem(scheduleStorageKey) || '[]');
-      const itemList = saved.length ? saved : defaultSchedules;
+      const items = saved.length ? saved : defaultSchedules;
       scheduleList.innerHTML = '';
-
-      itemList.forEach(item => {
+      items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'schedule-item';
         card.innerHTML = `<strong>${item.title}</strong><small>${item.time}</small><p>${item.description}</p>`;
@@ -1184,7 +983,7 @@
         current.push({ title, time, description });
         localStorage.setItem(scheduleStorageKey, JSON.stringify(current));
         renderSchedules();
-        renderCuriositySchedules();
+        renderSchedulesSidebar();
         scheduleTitle.value = '';
         scheduleTime.value = '';
         scheduleDescription.value = '';
@@ -1195,10 +994,65 @@
       }
     }
 
+    function openClub() {
+      if (!validateEntry()) return;
+      const seed = ['Violeta Nox', 'Luna Dourada', 'Clara Morsa', 'Milo Corvo'];
+      const selected = seed[Math.floor(Math.random() * seed.length)];
+      const map = {
+        'Violeta Nox': { name: 'Violeta Nox', description: 'Mistério da varanda, alérgica a reputações fáceis.', gossip: 'Violeta foi vista trocando olhares com a nova vizinha antes da reunião de quinta.' },
+        'Luna Dourada': { name: 'Luna Dourada', description: 'A dona dos comentários mais bonitos e mais perigosos.', gossip: 'Luna riu tanto que a própria portaria resolveu contar o rumor do terceiro andar.' },
+        'Clara Morsa': { name: 'Clara Morsa', description: 'Sabe o que acontece antes de todo mundo saber.', gossip: 'Clara avisou primeiro que o convite do jantar tinha uma data falsa e um motivo oculto.' },
+        'Milo Corvo': { name: 'Milo Corvo', description: 'Os recados chegam antes do café.', gossip: 'Milo disse que o quarto leste recebeu visita inesperada e saiu da noite sem deixar rastros.' }
+      };
+
+      const profile = map[selected];
+      localStorage.setItem(accessStorageKey, JSON.stringify({ unlocked: true, profile }));
+      window.location.hash = 'feed';
+      setMessage(entryMessage, 'Entrada válida. Acesso liberado.', 'success');
+    }
+
+    secretToggle.addEventListener('click', () => {
+      secretBox.classList.toggle('open');
+      if (secretBox.classList.contains('open')) setTimeout(() => secretInput.focus(), 80);
+    });
+
+    secretSubmit.addEventListener('click', () => {
+      const value = secretInput.value.trim();
+      if (!value) {
+        setMessage(entryMessage, 'Escreve um texto secreto para validar.', 'error');
+        return;
+      }
+      if (normalize(value) === normalize(secretCode)) {
+        secretBox.classList.remove('open');
+        secretInput.value = '';
+        setMessage(entryMessage, 'Texto secreto confirmado.', 'success');
+        document.getElementById('secreto').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        setMessage(entryMessage, 'Esse texto secreto não combina com o clube.', 'error');
+      }
+    });
+
+    secretAccessBtn.addEventListener('click', () => {
+      const value = secretAccessInput.value.trim();
+      if (!value) {
+        setMessage(secretAccessMessage, 'Escreve a frase secreta.', 'error');
+        return;
+      }
+      if (normalize(value) === normalize(secretCode)) {
+        secretText.textContent = secretMessage;
+        secretTextBox.classList.remove('hidden');
+        secretTextBox.style.display = 'block';
+        setMessage(secretAccessMessage, 'Chave válida. Texto secreto revelado.', 'success');
+      } else {
+        secretTextBox.classList.add('hidden');
+        secretTextBox.style.display = 'none';
+        setMessage(secretAccessMessage, 'Frase incorreta. Só o clube a conhece.', 'error');
+      }
+    });
+
     adminLoginBtn.addEventListener('click', () => {
       const user = adminUser.value.trim();
       const pass = adminPass.value.trim();
-
       if (user === 'admin_fofocas' && pass) {
         adminLoginForm.classList.add('hidden');
         adminPanel.classList.remove('hidden');
@@ -1210,16 +1064,15 @@
     });
 
     saveScheduleBtn.addEventListener('click', saveSchedule);
-
     enterBtn.addEventListener('click', openClub);
     entryText.addEventListener('input', updateCounter);
 
     document.addEventListener('DOMContentLoaded', () => {
       updateCounter();
-      renderCuriosityList();
-      renderCuriositySchedules();
+      renderMiniGossip();
       renderSchedules();
-      restoreState();
+      renderSchedulesSidebar();
+
       const peopleCount = document.getElementById('peopleCount');
       if (peopleCount) {
         const base = 127;
