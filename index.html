@@ -817,9 +817,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
-    // Inicialização do Supabase (SUBSTITUI ISTO)
-    const supabaseUrl = 'URL_DO_TEU_SUPABASE'; 
-    const supabaseKey = 'TUA_CHAVE_ANONIMA';
+    // Inicialização do Supabase
+    const supabaseUrl = 'https://zduckoxrbugruvatrgkq.supabase.co'; 
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkdWNrb3hyYnVncnV2YXRyZ2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NTE1ODgsImV4cCI6MjEwODQyNzU4OH0.8PTmfS0efrHuvege-yC3-FA6klI7n5hpPLLCGSogRgc'; // <-- Coloca a tua chave aqui
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     const accessStorageKey = 'clubAccess';
@@ -992,9 +992,9 @@
             article.innerHTML = `
               <div class="post-header">
                 <div class="author">
-                  <div class="author-avatar">${post.autor.charAt(0).toUpperCase()}</div>
+                  <div class="author-avatar">${(post.autor || 'A').charAt(0).toUpperCase()}</div>
                   <div class="author-meta">
-                    <strong>${post.autor}</strong>
+                    <strong>${post.autor || 'Anónimo'}</strong>
                     <span>agora mesmo</span>
                   </div>
                 </div>
