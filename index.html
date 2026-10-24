@@ -270,7 +270,7 @@
     .stat span { font-size: 0.72rem; color: var(--muted); }
 
     .mini-gossip { display: grid; gap: 10px; }
-    .gossip-pill { display: block; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); padding: 12px 14px; color: #f0d5ce; line-height: 1.7; }
+    .gossip-pill { display: block; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); padding: 12px 14px; color: #f0d5ce; line-height: 1.7; font-size: 0.9rem; }
     .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag { display: inline-flex; align-items: center; justify-content: center; padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--muted); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; }
     
@@ -293,6 +293,10 @@
     .msg-author { font-size: 0.68rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; font-weight: 900; letter-spacing: 0.05em; display: flex; justify-content: space-between; gap: 10px; }
     .chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
     .chat-input-row textarea { min-height: 52px; height: 52px; flex: 1; resize: none; margin: 0; }
+    
+    /* REVELAÇÃO DO CÓDIGO SECRETO */
+    .key-reveal-box { text-align: center; padding: 20px; }
+    .key-reveal-box .gossip-pill { font-size: 1.2rem; font-style: italic; color: #fff; background: rgba(240,109,111,0.15); border-color: rgba(240,109,111,0.3); margin: 20px 0; }
 
     @media (max-width: 980px) { .page { grid-template-columns: 1fr; } }
     @media (max-width: 620px) {
@@ -316,7 +320,7 @@
       <nav class="nav" aria-label="Navegação principal">
         <a onclick="switchTab('feed')" id="navFeed" class="active">Feed</a>
         <a onclick="switchTab('chat')" id="navChat" class="hidden">Chat Privado</a>
-        <a href="#secreto">Texto secreto</a>
+        <a onclick="switchTab('horario')" id="navHorario" class="hidden">Horário Semanal</a>
         <a href="#admin">Admin</a>
       </nav>
     </header>
@@ -325,33 +329,49 @@
       <!-- ABA PRINCIPAL DO FEED -->
       <section class="main tab-content" id="tab-feed">
         <div class="panel hero-panel" id="heroGate">
-          <div class="eyebrow">Acesso exclusivo</div>
-          <div class="hero-copy">
-            <h1>Entre no círculo. <br>Fale o suficiente. <br>Entre no caos.</h1>
-            <p>Para entrar no clube, escreves um texto pessoal com pelo menos 500 letras. Depois ganhas acesso à localização física e ao Chat Privado.</p>
-          </div>
           
-          <div class="secret-box" id="secretBox" aria-live="polite">
-            <div class="secret-box-inner">
-              <div class="secret-inline">
-                <input id="secretInput" type="text" placeholder="Escreve o teu texto secreto..." />
-                <button type="button" class="button ghost" id="secretSubmit">Validar</button>
+          <!-- Ecrã de Entrada Padrão -->
+          <div id="entryFormView">
+            <div class="eyebrow">Acesso exclusivo</div>
+            <div class="hero-copy">
+              <h1>Entre no círculo. <br>Fale o suficiente. <br>Entre no caos.</h1>
+              <p>Para entrar no clube, escreve uma fofoca ou um rumor com pelo menos 500 letras (será partilhado anonimamente no feed). Em troca, ganhas a tua "mini fofoca" que serve de código para voltares.</p>
+            </div>
+            
+            <div class="secret-box" id="secretBox" aria-live="polite">
+              <div class="secret-box-inner">
+                <div class="secret-inline">
+                  <input id="secretInput" type="text" placeholder="Qual é a tua mini fofoca secreta?" />
+                  <button type="button" class="button ghost" id="secretSubmit">Validar Entrada</button>
+                </div>
               </div>
             </div>
+            
+            <div class="button-row">
+              <button type="button" class="button secondary" id="secretToggle">Já és membro? Acede com a tua mini fofoca</button>
+            </div>
+            
+            <div class="entry-box">
+              <textarea id="entryText" placeholder="Escreve o teu rumor de entrada (mínimo 500 caracteres)..."></textarea>
+            </div>
+            <div class="bottom-row">
+              <span id="charCount" class="count">0 / 500</span>
+              <button type="button" class="button primary" id="enterBtn">Entrar no clube</button>
+            </div>
+            <div id="entryMessage" class="message"></div>
           </div>
-          
-          <div class="button-row">
-            <button type="button" class="button secondary" id="secretToggle">Aceder com texto secreto</button>
+
+          <!-- Ecrã de Sucesso e Revelação do Código -->
+          <div id="keyRevealView" class="key-reveal-box hidden">
+            <div class="eyebrow">Acesso Garantido</div>
+            <h2>O teu rumor foi partilhado.</h2>
+            <p style="color: var(--muted); line-height: 1.7; max-width: 50ch; margin: 10px auto;">
+              Foste aceite no clube. Para não teres de escrever 500 letras na próxima vez que voltares, <strong>memoriza ou copia a frase abaixo</strong>. Ela é a tua senha de entrada secreta.
+            </p>
+            <div class="gossip-pill" id="myAssignedCode">A gerar a tua mini fofoca secreta...</div>
+            <button class="button primary" onclick="finalizeEntry()">Entrar no Chat e Horário</button>
           </div>
-          
-          <div class="entry-box">
-            <textarea id="entryText" placeholder="Escreve o teu convite, a tua inscrição, o teu texto de entrada..."></textarea>
-          </div>
-          <div class="bottom-row">
-            <span id="charCount" class="count">0 / 500</span>
-            <button type="button" class="button primary" id="enterBtn">Entrar no clube</button>
-          </div>
-          <div id="entryMessage" class="message"></div>
+
         </div>
 
         <div class="feed-header">
@@ -360,25 +380,7 @@
         </div>
 
         <div id="realFeedContainer">
-          <!-- Fallback Visual Original do Feed (Se Base de Dados falhar) -->
-          <article class="post">
-            <div class="post-header">
-              <div class="author">
-                <div class="author-avatar">V</div>
-                <div class="author-meta"><strong>Violeta Nox</strong><span>há 2h • privado</span></div>
-              </div>
-              <div class="badge">Rumor</div>
-            </div>
-            <div class="post-body">
-              <h3 class="post-title">A varanda do terceiro andar ainda sabe o que ninguém disse em voz alta.</h3>
-              <p class="post-excerpt">Foi sentada a conversa mais curta da semana: uma nova visita, um nome trocado, um sorriso que não saiu do rosto.</p>
-              <div class="post-visual"></div>
-            </div>
-            <div class="post-meta">
-              <div class="post-actions"><span>♡ 482</span><span>💬 63</span></div>
-              <div class="badge">#gossip</div>
-            </div>
-          </article>
+          <!-- O Feed Real entra aqui -->
         </div>
       </section>
 
@@ -399,14 +401,48 @@
         </div>
       </section>
 
+      <!-- NOVA ABA: HORÁRIO SEMANAL -->
+      <section class="main tab-content hidden" id="tab-horario">
+        <div class="panel hero-panel">
+          <div class="feed-header" style="padding: 0; margin-bottom: 10px;">
+            <h2>Horário Semanal do Clube</h2>
+            <div class="badge">Acesso Restrito</div>
+          </div>
+          <p style="color: var(--muted); line-height: 1.7; margin-bottom: 20px;">
+            Estes são os encontros físicos regulares do clube. Se vires alguém conhecido, age como se não o visses.
+          </p>
+          <div class="schedule-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 0;">
+            
+            <div class="schedule-item">
+              <strong>Segunda-feira</strong>
+              <small>21:30 - Jardim da Sereia</small>
+              <p>Troca de rumores rápidos perto da fonte. Ninguém fala mais de 2 minutos com a mesma pessoa.</p>
+            </div>
+
+            <div class="schedule-item">
+              <strong>Quarta-feira</strong>
+              <small>22:45 - Café da Esquina Escura</small>
+              <p>Encontro nas mesas do fundo. Bebidas pagas em dinheiro, não uses cartões com o teu nome.</p>
+            </div>
+
+            <div class="schedule-item">
+              <strong>Sexta-feira</strong>
+              <small>23:59 - Terraço do Edifício Central</small>
+              <p>O encontro principal. As histórias da semana são partilhadas em voz baixa virados para a cidade.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       <!-- BARRA LATERAL (SEMPRE VISÍVEL) -->
       <aside class="sidebar">
         <!-- Localização Física -->
         <div class="side-card" id="espaco-fisico">
-          <h3>Ponto de Encontro Físico</h3>
+          <h3>Ponto de Encontro Hoje</h3>
           <div class="club-box">
             <p style="margin:0; color: var(--warm); font-weight: bold;" id="localFisicoNome">A aguardar sinal...</p>
-            <p style="margin:0; color: var(--muted); line-height:1.7;" id="localFisicoDesc">Nenhum ponto de encontro definido de momento.</p>
+            <p style="margin:0; color: var(--muted); line-height:1.7;" id="localFisicoDesc">Nenhum ponto de encontro especial definido para hoje.</p>
           </div>
         </div>
 
@@ -416,18 +452,6 @@
             <div class="stat"><strong id="peopleCount">127</strong><span>pessoas hoje</span></div>
             <div class="stat"><strong>19</strong><span>grupos</span></div>
             <div class="stat"><strong>8</strong><span>mistérios</span></div>
-          </div>
-        </div>
-
-        <div class="side-card" id="secreto">
-          <h3>Texto secreto</h3>
-          <div class="club-box">
-            <input id="secretAccessInput" type="text" placeholder="Escreve a frase secreta..." />
-            <button type="button" class="button secondary" id="secretAccessBtn">Abrir texto secreto</button>
-            <div id="secretAccessMessage" class="message"></div>
-            <div id="secretTextBox" class="hidden" style="background: rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:14px; padding:12px 14px;">
-              <p id="secretText" style="margin:0; color: var(--muted); line-height:1.8; white-space:pre-wrap;"></p>
-            </div>
           </div>
         </div>
 
@@ -442,11 +466,9 @@
 
           <div id="adminPanel" class="club-box hidden">
             <p style="margin:0; color: var(--success); font-size: 0.8rem; font-weight: bold;">Sessão Admin Ativa</p>
-            
             <hr style="border: 0; border-top: 1px solid var(--line); margin: 10px 0;">
-            
-            <p style="margin:0; color: var(--muted); font-size: 0.85rem;">Definir Ponto de Encontro Físico:</p>
-            <input id="adminLocalNome" type="text" placeholder="Ex: Jardim da Sereia" />
+            <p style="margin:0; color: var(--muted); font-size: 0.85rem;">Definir Ponto de Encontro Físico Especial:</p>
+            <input id="adminLocalNome" type="text" placeholder="Ex: Garagem Nível -2" />
             <textarea id="adminLocalDesc" placeholder="Descrição ou instruções de encontro..." style="min-height: 60px;"></textarea>
             <button type="button" class="button ghost" id="saveLocationBtn">Atualizar Localização</button>
             <div id="adminLocationMsg" class="message"></div>
@@ -460,49 +482,67 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
-    // Configuração Supabase (Substitui pelas tuas quando criares a base de dados!)
-    // O uso de 'var' impede os problemas de redeclaração se recarregares várias vezes
+    // --- SUPABASE SETUP ---
     var supabaseUrl = 'https://zduckoxrbugruvatrgkq.supabase.co'; 
-    var supabaseKey = 'COLA_AQUI_A_TUA_CHAVE_ANON_PUBLIC';
+    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkdWNrb3hyYnVncnV2YXRyZ2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NTE1ODgsImV4cCI6MjEwODQyNzU4OH0.8PTmfS0efrHuvege-yC3-FA6klI7n5hpPLLCGSogRgc';
     
-    // Opcional: só inicializa se tiveres a chave inserida.
     var supabaseClient = null;
     if (supabaseKey !== 'COLA_AQUI_A_TUA_CHAVE_ANON_PUBLIC') {
       supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Variáveis e Chaves Locais
+    // --- KEYS E VARIÁVEIS GLOBAIS ---
     const accessStorageKey = 'clubAccess';
     const locationStorageKey = 'clubLocation';
     const chatStorageKey = 'clubChatLocal';
-    const secretCode = 'murmurio-secreto-clube';
-    const secretMessage = '“silêncio é o primeiro rumor que te faz entrar” — e é por isso que o clube nunca fala alto o suficiente para te deixar ir sem pensar duas vezes.';
+    const feedStorageKey = 'clubFeedLocal';
+    const myCodeKey = 'mySecretFofocaCode';
 
     let currentUserProfile = null;
     let isAdmin = false;
+    let myMiniFofoca = localStorage.getItem(myCodeKey) || null;
 
-    // --- FUNÇÕES DE INTERFACE (ABAS) ---
+    // --- GERADOR DE 500+ MINI FOFOCAS UNICAS (MÁX 10 PALAVRAS) ---
+    function gerarNovaMiniFofoca() {
+      const sujeitos = ['A vizinha', 'O porteiro', 'A rapariga', 'O zelador', 'O gerente', 'A senhora', 'O rapaz', 'A diretora', 'O convidado', 'A novata'];
+      const acoes = ['escondeu', 'perdeu', 'encontrou', 'mentiu sobre', 'esqueceu', 'destruiu', 'roubou', 'entregou', 'escreveu', 'queimou'];
+      const objetos = ['a chave', 'a carta', 'o bilhete', 'o casaco', 'o anel', 'o diário', 'a foto', 'o dinheiro', 'a mensagem', 'o relógio'];
+      const locais = ['no corredor.', 'na escada.', 'no jardim.', 'na garagem.', 'no telhado.', 'na cave.', 'no elevador.', 'na sala.', 'no quarto.', 'na cozinha.'];
+      
+      const s = sujeitos[Math.floor(Math.random() * sujeitos.length)];
+      const a = acoes[Math.floor(Math.random() * acoes.length)];
+      const o = objetos[Math.floor(Math.random() * objetos.length)];
+      const l = locais[Math.floor(Math.random() * locais.length)];
+      
+      // Retorna uma frase com exatas 7 palavras (cumpre o limite de < 10)
+      return `${s} ${a} ${o} ${l}`;
+    }
+
+    // --- TABS & NAVEGAÇÃO ---
     function switchTab(tabId) {
-      // Esconder todas as abas principais
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.getElementById(`tab-${tabId}`).classList.remove('hidden');
       
-      // Atualizar barra de navegação
       document.querySelectorAll('.nav a').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId === 'feed' ? 'navFeed' : 'navChat').classList.add('active');
+      
+      let navId = 'navFeed';
+      if (tabId === 'chat') navId = 'navChat';
+      if (tabId === 'horario') navId = 'navHorario';
+      
+      const navEl = document.getElementById(navId);
+      if (navEl) navEl.classList.add('active');
 
-      if (tabId === 'chat') {
-        carregarChat();
-      }
+      if (tabId === 'chat') carregarChat();
     }
 
-    // --- GATEKEEPER & ACESSO ---
+    // --- PORTÃO E ACESSO (GATEKEEPER) ---
     const entryText = document.getElementById('entryText');
     const charCount = document.getElementById('charCount');
-    const enterBtn = document.getElementById('enterBtn');
-    const entryMessage = document.getElementById('entryMessage');
     const heroGate = document.getElementById('heroGate');
     const navChat = document.getElementById('navChat');
+    const navHorario = document.getElementById('navHorario');
+    const entryFormView = document.getElementById('entryFormView');
+    const keyRevealView = document.getElementById('keyRevealView');
 
     entryText.addEventListener('input', () => {
       charCount.textContent = `${entryText.value.trim().length} / 500`;
@@ -512,28 +552,139 @@
       const access = JSON.parse(localStorage.getItem(accessStorageKey));
       if (access && access.unlocked) {
         currentUserProfile = access.profile;
-        heroGate.classList.add('hidden'); // Esconde o portão
+        heroGate.classList.add('hidden'); // Esconde o painel de entrada gigante
         navChat.classList.remove('hidden'); // Mostra a aba de Chat Privado
+        navHorario.classList.remove('hidden'); // Mostra a aba do Horário
       }
     }
 
-    enterBtn.addEventListener('click', () => {
-      const length = entryText.value.trim().length;
-      if (length < 500) {
-        entryMessage.textContent = 'O teu texto precisa ter pelo menos 500 letras para entrar no clube.';
-        entryMessage.className = 'message error';
+    // Quando o utilizador clica em "Entrar no Clube" com texto de 500 caracteres
+    document.getElementById('enterBtn').addEventListener('click', async () => {
+      const texto = entryText.value.trim();
+      const msg = document.getElementById('entryMessage');
+
+      if (texto.length < 500) {
+        msg.textContent = 'O teu rumor precisa ter pelo menos 500 letras para ter valor no clube.';
+        msg.className = 'message error';
         return;
       }
       
-      // Gerar perfil aleatório para o membro
+      // 1. Gerar e guardar a Mini Fofoca Secreta (o novo código de login)
+      myMiniFofoca = gerarNovaMiniFofoca();
+      localStorage.setItem(myCodeKey, myMiniFofoca);
+
+      // 2. Publicar o Rumor de 500 letras no Feed Público!
+      await publicarNoFeed('Um novo membro falou.', texto);
+
+      // 3. Mudar para a vista de Sucesso / Revelação do código
+      entryFormView.classList.add('hidden');
+      document.getElementById('myAssignedCode').textContent = myMiniFofoca;
+      keyRevealView.classList.remove('hidden');
+    });
+
+    // Função ativada no ecrã de Sucesso após o membro ver a sua mini-fofoca
+    function finalizeEntry() {
       const names = ['Violeta Nox', 'Luna Dourada', 'Clara Morsa', 'Milo Corvo', 'Sombra Anónima'];
       const myName = names[Math.floor(Math.random() * names.length)];
       
       localStorage.setItem(accessStorageKey, JSON.stringify({ unlocked: true, profile: { name: myName } }));
-      entryMessage.textContent = 'Entrada válida. Acesso ao Chat Privado liberado.';
-      entryMessage.className = 'message success';
-      setTimeout(checkAccess, 1000);
+      checkAccess();
+    }
+
+    // --- LOGIN PARA QUEM JÁ TEM A MINI FOFOCA ---
+    document.getElementById('secretToggle').addEventListener('click', () => {
+      document.getElementById('secretBox').classList.toggle('open');
     });
+
+    document.getElementById('secretSubmit').addEventListener('click', () => {
+      const typed = document.getElementById('secretInput').value.trim().toLowerCase();
+      const saved = (myMiniFofoca || '').toLowerCase();
+      const msg = document.getElementById('entryMessage');
+
+      if (!typed) {
+        msg.textContent = 'Escreve a tua mini fofoca para entrar.';
+        msg.className = 'message error';
+        return;
+      }
+
+      // Valida se o que foi escrito é igual ao que está guardado no perfil
+      if (typed === saved) {
+        finalizeEntry();
+      } else {
+        msg.textContent = 'Essa fofoca não é o teu código. Não tentes enganar o clube.';
+        msg.className = 'message error';
+      }
+    });
+
+
+    // --- FEED (CARREGAR E PUBLICAR) ---
+    const realFeedContainer = document.getElementById('realFeedContainer');
+
+    async function publicarNoFeed(titulo, excerto) {
+      const post = { autor: 'Anónimo', titulo, excerto, created_at: new Date().toISOString(), likes: Math.floor(Math.random()*15) };
+      
+      if (supabaseClient) {
+        try { await supabaseClient.from('posts').insert([post]); } catch(e){}
+      }
+      // Guardar sempre localmente também
+      const localFeed = JSON.parse(localStorage.getItem(feedStorageKey) || '[]');
+      localFeed.unshift(post); // adiciona no início
+      localStorage.setItem(feedStorageKey, JSON.stringify(localFeed));
+      carregarFeedReal();
+    }
+
+    async function carregarFeedReal() {
+      let data = null;
+      if (supabaseClient) {
+        try {
+          const res = await supabaseClient.from('posts').select('*').order('created_at', { ascending: false });
+          if (res.data && res.data.length > 0) data = res.data;
+        } catch(e) {}
+      }
+
+      // Se falhar o supabase, busca do LocalStorage
+      if (!data) {
+        data = JSON.parse(localStorage.getItem(feedStorageKey) || '[]');
+      }
+
+      // Adicionar Post Base (se não houver nada)
+      if (data.length === 0) {
+        data.push({
+          autor: 'Violeta Nox',
+          titulo: 'A varanda do terceiro andar ainda sabe o que ninguém disse em voz alta.',
+          excerto: 'Foi sentada a conversa mais curta da semana: uma nova visita, um nome trocado, um sorriso que não saiu do rosto.',
+          likes: 482
+        });
+      }
+
+      realFeedContainer.innerHTML = '';
+      data.forEach(post => {
+        const article = document.createElement('article');
+        article.className = 'post';
+        article.innerHTML = `
+          <div class="post-header">
+            <div class="author">
+              <div class="author-avatar">${(post.autor || 'A').charAt(0).toUpperCase()}</div>
+              <div class="author-meta">
+                <strong>${post.autor || 'Anónimo'}</strong>
+                <span>registado recentemente</span>
+              </div>
+            </div>
+            <div class="badge">Rumor Público</div>
+          </div>
+          <div class="post-body">
+            <h3 class="post-title">${post.titulo}</h3>
+            <p class="post-excerpt" style="white-space: pre-wrap;">${post.excerto}</p>
+            <div class="post-visual"></div>
+          </div>
+          <div class="post-meta">
+            <div class="post-actions"><span>♡ ${post.likes || 0}</span></div>
+            <div class="badge">#gossip</div>
+          </div>
+        `;
+        realFeedContainer.appendChild(article);
+      });
+    }
 
     // --- CHAT PRIVADO ---
     const chatInput = document.getElementById('chatInput');
@@ -541,20 +692,18 @@
     const chatMessages = document.getElementById('chatMessages');
 
     async function carregarChat() {
-      // 1. Tentar carregar do Supabase (se existir a tabela chat_mensagens)
+      let data = null;
       if (supabaseClient) {
         try {
-          const { data, error } = await supabaseClient.from('chat_mensagens').select('*').order('created_at', { ascending: true });
-          if (data && data.length > 0) {
-            renderizarMensagens(data);
-            return;
-          }
-        } catch (e) { console.warn("Supabase Chat Falhou, usando LocalStorage."); }
+          const res = await supabaseClient.from('chat_mensagens').select('*').order('created_at', { ascending: true });
+          if (res.data && res.data.length > 0) data = res.data;
+        } catch (e) {}
       }
       
-      // 2. Fallback: Carregar do LocalStorage
-      const localMsgs = JSON.parse(localStorage.getItem(chatStorageKey) || '[]');
-      renderizarMensagens(localMsgs);
+      if (!data) {
+        data = JSON.parse(localStorage.getItem(chatStorageKey) || '[]');
+      }
+      renderizarMensagens(data);
     }
 
     function renderizarMensagens(mensagens) {
@@ -563,10 +712,9 @@
       mensagens.forEach(msg => {
         const isMe = (msg.autor === (currentUserProfile?.name || 'Admin'));
         const div = document.createElement('div');
-        div.className = `msg ${isMe ? 'me' : ''} ${msg.autor === 'Admin' ? 'admin' : ''}`;
+        div.className = `msg ${isMe ? 'me' : ''}`;
         
         const dateStr = new Date(msg.created_at || Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        
         div.innerHTML = `
           <div class="msg-author">
             <span style="${msg.autor === 'Admin' ? 'color: var(--accent);' : ''}">${msg.autor}</span>
@@ -576,7 +724,6 @@
         `;
         chatMessages.appendChild(div);
       });
-      // Scroll para o fundo
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
@@ -589,16 +736,10 @@
       
       chatInput.value = '';
 
-      // Tentar Supabase
       if (supabaseClient) {
-        try {
-          await supabaseClient.from('chat_mensagens').insert([novaMsg]);
-          carregarChat();
-          return;
-        } catch (e) { console.warn("Erro ao enviar para Supabase."); }
+        try { await supabaseClient.from('chat_mensagens').insert([novaMsg]); carregarChat(); return; } catch (e) {}
       }
 
-      // Fallback Local
       const localMsgs = JSON.parse(localStorage.getItem(chatStorageKey) || '[]');
       localMsgs.push(novaMsg);
       localStorage.setItem(chatStorageKey, JSON.stringify(localMsgs));
@@ -609,14 +750,13 @@
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); btnSendChat.click(); }
     });
 
-
     // --- LOCALIZAÇÃO FÍSICA E ADMIN ---
     async function carregarLocalizacao() {
       if (supabaseClient) {
         try {
-          const { data, error } = await supabaseClient.from('espacos_fisicos').select('*').limit(1).single();
+          const { data } = await supabaseClient.from('espacos_fisicos').select('*').limit(1).single();
           if (data) { atualizarUI_Localizacao(data.nome_local, data.descricao); return; }
-        } catch (e) { /* Fallback */ }
+        } catch (e) {}
       }
       
       const locLocal = JSON.parse(localStorage.getItem(locationStorageKey));
@@ -628,7 +768,6 @@
       document.getElementById('localFisicoDesc').textContent = desc;
     }
 
-    // Login Admin
     document.getElementById('adminLoginBtn').addEventListener('click', () => {
       const user = document.getElementById('adminUser').value.trim();
       if (user === 'admin_fofocas') {
@@ -637,14 +776,14 @@
         document.getElementById('adminPanel').classList.remove('hidden');
         document.getElementById('adminLoginMessage').textContent = '';
         
-        // Ativar Chat para o Admin também
+        // Ativar Abas Extra para o Admin
         navChat.classList.remove('hidden');
+        navHorario.classList.remove('hidden');
       } else {
         document.getElementById('adminLoginMessage').textContent = 'Usuário incorreto.';
       }
     });
 
-    // Guardar Localização
     document.getElementById('saveLocationBtn').addEventListener('click', async () => {
       const nome = document.getElementById('adminLocalNome').value.trim();
       const desc = document.getElementById('adminLocalDesc').value.trim();
@@ -655,10 +794,7 @@
       }
 
       if (supabaseClient) {
-        try {
-          // Atualiza a linha existente ou insere
-          await supabaseClient.from('espacos_fisicos').upsert([{ id: 1, nome_local: nome, descricao: desc }]);
-        } catch (e) { /* Fallback */ }
+        try { await supabaseClient.from('espacos_fisicos').upsert([{ id: 1, nome_local: nome, descricao: desc }]); } catch (e) {}
       }
 
       localStorage.setItem(locationStorageKey, JSON.stringify({ nome, desc }));
@@ -670,27 +806,11 @@
       document.getElementById('adminLocalDesc').value = '';
     });
 
-
-    // --- TEXTO SECRETO (Comum) ---
-    document.getElementById('secretAccessBtn').addEventListener('click', () => {
-      const val = document.getElementById('secretAccessInput').value.trim().toLowerCase();
-      const msgBox = document.getElementById('secretAccessMessage');
-      const textBox = document.getElementById('secretTextBox');
-      
-      if (val === secretCode) {
-        document.getElementById('secretText').textContent = secretMessage;
-        textBox.classList.remove('hidden');
-        msgBox.textContent = 'Chave validada.'; msgBox.className = 'message success';
-      } else {
-        textBox.classList.add('hidden');
-        msgBox.textContent = 'Frase incorreta.'; msgBox.className = 'message error';
-      }
-    });
-
     // --- INICIALIZAÇÃO ---
     document.addEventListener('DOMContentLoaded', () => {
       checkAccess();
       carregarLocalizacao();
+      carregarFeedReal();
       
       const pc = document.getElementById('peopleCount');
       if (pc) pc.textContent = Math.floor(120 + Math.random() * 20);
