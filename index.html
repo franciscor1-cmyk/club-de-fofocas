@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club de Fofocas</title>
+  <style>
+    :root {
+      --bg: #f8f3ee;
+      --panel: #fffdfb;
+      --panel-alt: #f3e8df;
+      --ink: #1d1d1d;
+      --muted: #6e5c57;
+      --border: rgba(39, 28, 24, 0.12);
+      --accent: #f27e7e;
+      --accent-2: #efc4ba;
+      --accent-3: #a4d6d8;
+      --dark: #2a1f1d;
+      --success: #3a9a6d;
+      --danger: #d45858;
+      --shadow: 0 16px 40px rgba(31, 22, 18, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(242,126,126,0.08), transparent 32%),
+        radial-gradient(circle at top right, rgba(164,214,216,0.12), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 28px 16px 60px;
+    }
+
+    .app {
+      width: min(1200px, 100%);
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 28px;
+      background: rgba(255, 255, 255, 0.76);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7);
+      position: relative;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 0 0 2px rgba(20,14,13,0.04);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: .2s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(242,126,126,0.08);
+      color: var(--ink);
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      padding: 28px;
+      min-height: 720px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 28px rgba(33, 20, 18, 0.05);
+      padding: 24px;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.82), rgba(246,227,220,0.55)),
+        var(--panel);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      background: rgba(242,126,126,0.08);
+      color: #a94e4e;
+      border: 1px solid rgba(242,126,126,0.12);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.8);
+      border-radius: 16px;
+      padding: 16px 18px;
+      font: inherit;
+      color: var(--ink);
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    textarea:focus, input:focus {
+      border-color: rgba(242,126,126,0.55);
+      box-shadow: 0 0 0 4px rgba(242,126,126,0.1);
+    }
+
+    textarea {
+      min-height: 210px;
+      line-height: 1.7;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .meta .count {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--dark), #473938);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 10px 18px rgba(55,35,31,0.18);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.secondary {
+      background: linear-gradient(135deg, var(--accent), #ef9f99);
+      box-shadow: 0 10px 18px rgba(242,126,126,0.25);
+    }
+
+    .button.ghost {
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .error, .success-message {
+      min-height: 20px;
+      font-size: 0.96rem;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .error { color: var(--danger); }
+    .success-message { color: var(--success); }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .mini-card {
+      padding: 18px 18px 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(238,228,221,0.75));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .mini-card h3 {
+      margin: 0 0 10px;
+      font-size: 0.96rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(90px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 12px 10px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .club-area {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .profile-box {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(241,233,230,0.72));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7);
+    }
+
+    .profile-meta h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.5rem, 2vw, 2rem);
+    }
+
+    .profile-meta p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .mail-box, .gossip-box, .schedule-box, .admin-box {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .mail-box h3, .gossip-box h3, .schedule-box h3, .admin-box h3 {
+      margin: 0 0 16px;
+      font-size: 0.82rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .mail-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mail-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .mail-item strong {
+      font-size: 0.96rem;
+    }
+
+    .mail-badge {
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      background: rgba(164,214,216,0.15);
+      color: #2d6d72;
+      border: 1px solid rgba(164,214,216,0.35);
+      font-weight: 700;
+    }
+
+    .gossip-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .gossip-box .prompt {
+      background: rgba(242,126,126,0.06);
+      border: 1px solid rgba(242,126,126,0.12);
+      border-radius: 16px;
+      padding: 18px;
+      color: #563b38;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .input-row > * { flex: 1; }
+
+    .schedule-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .schedule-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.8);
+    }
+
+    .schedule-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .schedule-item small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .schedule-item p {
+      margin: 0;
+      line-height: 1.6;
+      color: #433a39;
+    }
+
+    .admin-login, .admin-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .admin-box .subtle {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: -4px;
+    }
+
+    @media (max-width: 920px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar {
+        padding: 14px 18px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .profile-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <span>Club de Fofocas</span>
+      </div>
+
+      <nav class="nav">
+        <a href="#entrada">Entrada</a>
+        <a href="#club">Clube</a>
+        <a href="#admin">Admin</a>
+      </nav>
+    </header>
+
+    <main class="content">
+      <section id="entrada" class="panel hero">
+        <div class="eyebrow">Acesso exclusivo</div>
+
+        <h1>Entre no círculo. <br />Fale o suficiente. <br />Entre no caos.</h1>
+
+        <p>
+          Para entrar no clube, escreva um texto próprio com no mínimo 500 letras.
+          Depois, o sistema leva você para a área do grupo de emails personalizados,
+          onde você precisa decorar a mini fofoca associada ao seu perfil.
+        </p>
+
+        <textarea id="entryText" placeholder="Escreva a sua inscrição, o seu convite, o seu texto secreto..."></textarea>
+
+        <div class="meta">
+          <span id="charCount" class="count">0 / 500</span>
+          <button id="enterBtn" class="button">Entrar no clube</button>
+        </div>
+
+        <div id="entryError" class="error"></div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="mini-card">
+          <h3>Resumo</h3>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong>500+</strong>
+              <span>letras mín.</span>
+            </div>
+            <div class="stat">
+              <strong>1</strong>
+              <span>mini fofoca</span>
+            </div>
+            <div class="stat">
+              <strong>3</strong>
+              <span>grupos</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>rumores</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <h3>Regra do clube</h3>
+          <p style="margin:0; line-height:1.7; color: var(--muted);">
+            O perfil é secreto. O texto precisa convencer. A fofoca precisa ser lembrada.
+            Quem entra, fica.
+          </p>
+        </div>
+      </aside>
+
+      <section id="club" class="panel club-area hidden" style="grid-column: 1 / -1;">
+        <div class="profile-box">
+          <div id="avatar" class="avatar">F</div>
+          <div class="profile-meta">
+            <h2 id="profileName">Perfil secreto</h2>
+            <p id="profileDescription">Você entrou no clube. Agora precise memorizar a fofoca da sua identidade.</p>
+          </div>
+        </div>
+
+        <div class="board">
+          <div class="mail-box">
+            <h3>Grupo de emails personalizados</h3>
+            <ul id="mailList" class="mail-list"></ul>
+          </div>
+
+          <div class="gossip-box">
+            <h3>Mini fofoca do perfil</h3>
+            <div id="miniGossip" class="prompt"></div>
+
+            <input
+              id="gossipAnswer"
+              type="text"
+              placeholder="Reescreva a mini fofoca exata"
+            />
+
+            <div class="input-row">
+              <button id="gossipCheckBtn" class="button secondary">Validar fofoca</button>
+              <button id="resetBtn" class="button ghost">Voltar</button>
+            </div>
+
+            <div id="gossipResult" class="success-message"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin" class="panel hidden" style="grid-column: 1 / -1;">
+        <div class="admin-box">
+          <h3>Admin do clube</h3>
+
+          <div id="adminLoginForm" class="admin-login">
+            <input id="adminUser" type="text" placeholder="Usuário" />
+            <input id="adminPass" type="password" placeholder="Senha" />
+            <button id="adminLoginBtn" class="button secondary">Entrar como admin</button>
+            <div id="adminLoginMessage" class="error"></div>
+          </div>
+
+          <div id="adminPanel" class="admin-panel hidden">
+            <p class="subtle">
+              Gere horários e descrições para os encontros do clube.
+            </p>
+
+            <div class="input-row">
+              <input id="scheduleTitle" type="text" placeholder="Título do horário" />
+              <input id="scheduleTime" type="text" placeholder="Ex.: 20:30" />
+            </div>
+
+            <textarea id="scheduleDescription" placeholder="Descrição do evento ou encontro..."></textarea>
+
+            <button id="saveScheduleBtn" class="button">Salvar horário</button>
+
+            <div class="schedule-list" id="scheduleList"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const entryText = document.getElementById("entryText");
+    const charCount = document.getElementById("charCount");
+    const entryError = document.getElementById("entryError");
+    const enterBtn = document.getElementById("enterBtn");
+
+    const club = document.getElementById("club");
+    const profileName = document.getElementById("profileName");
+    const profileDescription = document.getElementById("profileDescription");
+    const avatar = document.getElementById("avatar");
+    const mailList = document.getElementById("mailList");
+    const miniGossip = document.getElementById("miniGossip");
+    const gossipAnswer = document.getElementById("gossipAnswer");
+    const gossipCheckBtn = document.getElementById("gossipCheckBtn");
+    const gossipResult = document.getElementById("gossipResult");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const adminUser = document.getElementById("adminUser");
+    const adminPass = document.getElementById("adminPass");
+    const adminLoginBtn = document.getElementById("adminLoginBtn");
+    const adminLoginMessage = document.getElementById("adminLoginMessage");
+    const adminLoginForm = document.getElementById("adminLoginForm");
+    const adminPanel = document.getElementById("adminPanel");
+    const scheduleTitle = document.getElementById("scheduleTitle");
+    const scheduleTime = document.getElementById("scheduleTime");
+    const scheduleDescription = document.getElementById("scheduleDescription");
+    const saveScheduleBtn = document.getElementById("saveScheduleBtn");
+    const scheduleList = document.getElementById("scheduleList");
+
+    const profiles = [
+      { name: "Violeta Nox", description: "Mistério da varanda, alérgica a reputações fáceis.", gossip: "Violeta foi vista trocando olhares com a nova vizinha antes da reunião de quinta." },
+      { name: "Luna Dourada", description: "A dona dos comentários mais bonitos e mais perigosos.", gossip: "Luna riu tanto que a própria portaria resolveu contar o rumor do terceiro andar." },
+      { name: "Clara Morsa", description: "Sabe o que acontece antes de todo mundo saber.", gossip: "Clara avisou primeiro que o convite do jantar tinha uma data falsa e um motivo oculto." },
+      { name: "Milo Corvo", description: "Os recados chegam antes do café.", gossip: "Milo disse que o quarto leste recebeu visita inesperada e saiu da noite sem deixar rastros." }
+    ];
+
+    const scheduleStorageKey = "clubSchedules";
+    const accessStorageKey = "clubAccess";
+
+    function updateCounter() {
+      const length = entryText.value.trim().length;
+      charCount.textContent = `${length} / 500`;
+    }
+
+    entryText.addEventListener("input", updateCounter);
+
+    function validateEntry() {
+      const value = entryText.value.trim();
+      const letters = value.length;
+
+      if (letters < 500) {
+        entryError.textContent = "Seu texto precisa ter pelo menos 500 letras para entrar no clube.";
+        return false;
+      }
+
+      entryError.textContent = "";
+      return true;
+    }
+
+    function openClub() {
+      if (!validateEntry()) return;
+
+      const profile = profiles[Math.floor(Math.random() * profiles.length)];
+      profileName.textContent = profile.name;
+      profileDescription.textContent = profile.description;
+      avatar.textContent = profile.name.charAt(0).toUpperCase();
+
+      const mails = [
+        `${profile.name.toLowerCase().replace(/\s+/g, ".")}@fofocas.club`,
+        `${profile.name.toLowerCase().replace(/\s+/g, "")}@rumorbox.io`,
+        `bastidores.${profile.name.toLowerCase().replace(/\s+/g, "")}@club.io`,
+        `murmurios@${profile.name.toLowerCase().replace(/\s+/g, "")}.club`
+      ];
+
+      mailList.innerHTML = "";
+      mails.forEach((mail, index) => {
+        const li = document.createElement("li");
+        li.className = "mail-item";
+
+        const left = document.createElement("div");
+        left.innerHTML = `<strong>${mail}</strong>`;
+
+        const badge = document.createElement("span");
+        badge.className = "mail-badge";
+        badge.textContent = index === 0 ? "ativo" : "grupo";
+
+        li.appendChild(left);
+        li.appendChild(badge);
+        mailList.appendChild(li);
+      });
+
+      miniGossip.textContent = profile.gossip;
+      gossipAnswer.value = "";
+      gossipResult.textContent = "";
+      club.classList.remove("hidden");
+      document.getElementById("entrada").scrollIntoView({ behavior: "smooth", block: "start" });
+      localStorage.setItem(accessStorageKey, JSON.stringify({ unlocked: true, profile }));
+    }
+
+    enterBtn.addEventListener("click", openClub);
+
+    function normalizeText(value) {
+      return value.toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    gossipCheckBtn.addEventListener("click", () => {
+      const expected = normalizeText(miniGossip.textContent);
+      const user = normalizeText(gossipAnswer.value);
+
+      if (!user) {
+        gossipResult.textContent = "Escreva a mini fofoca para validar.";
+        gossipResult.className = "error";
+        return;
+      }
+
+      if (user === expected) {
+        gossipResult.textContent = "Acesso confirmado. Você memorizou a fofoca do perfil.";
+        gossipResult.className = "success-message";
+      } else {
+        gossipResult.textContent = "Não bateu. Tente lembrar melhor a frase exata.";
+        gossipResult.className = "error";
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      club.classList.add("hidden");
+      entryText.value = "";
+      gossipAnswer.value = "";
+      updateCounter();
+      entryError.textContent = "";
+      gossipResult.textContent = "";
+    });
+
+    function saveSchedule() {
+      const title = scheduleTitle.value.trim();
+      const time = scheduleTime.value.trim();
+      const description = scheduleDescription.value.trim();
+
+      if (!title || !time || !description) {
+        adminLoginMessage.textContent = "Preencha título, horário e descrição.";
+        adminLoginMessage.className = "error";
+        return;
+      }
+
+      const saved = JSON.parse(localStorage.getItem(scheduleStorageKey) || "[]");
+      saved.push({ title, time, description });
+      localStorage.setItem(scheduleStorageKey, JSON.stringify(saved));
+      renderSchedules();
+      scheduleTitle.value = "";
+      scheduleTime.value = "";
+      scheduleDescription.value = "";
+      adminLoginMessage.textContent = "";
+      adminLoginMessage.className = "error";
+    }
+
+    function renderSchedules() {
+      const saved = JSON.parse(localStorage.getItem(scheduleStorageKey) || "[]");
+      scheduleList.innerHTML = "";
+
+      if (!saved.length) {
+        scheduleList.innerHTML = `
+          <div class="schedule-item">
+            <strong>Sem horários</strong>
+            <small>Haverá novos encontros em breve.</small>
+            <p>O admin pode criar novos slots para reuniões, encontros e bastidores.</p>
+          </div>
+        `;
+        return;
+      }
+
+      saved.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "schedule-item";
+        card.innerHTML = `
+          <strong>${item.title}</strong>
+          <small>${item.time}</small>
+          <p>${item.description}</p>
+        `;
+        scheduleList.appendChild(card);
+      });
+    }
+
+    saveScheduleBtn.addEventListener("click", saveSchedule);
+
+    adminLoginBtn.addEventListener("click", () => {
+      const user = adminUser.value.trim();
+      const pass = adminPass.value.trim();
+
+      if (user === "admin_fofocas" && pass) {
+        adminLoginForm.classList.add("hidden");
+        adminPanel.classList.remove("hidden");
+        adminLoginMessage.textContent = "";
+        adminLoginMessage.className = "error";
+        renderSchedules();
+      } else {
+        adminLoginMessage.textContent = "Usuário inválido. A senha do admin é a palavra-chave do clube.";
+        adminLoginMessage.className = "error";
+      }
+    });
+
+    function restorePreviousState() {
+      const raw = localStorage.getItem(accessStorageKey);
+      if (!raw) return;
+
+      try {
+        const obj = JSON.parse(raw);
+        if (obj && obj.unlocked && obj.profile) {
+          const profile = obj.profile;
+          profileName.textContent = profile.name;
+          profileDescription.textContent = profile.description;
+          avatar.textContent = profile.name.charAt(0).toUpperCase();
+          miniGossip.textContent = profile.gossip;
+          club.classList.remove("hidden");
+        }
+      } catch (err) {
+        console.log("Erro ao restaurar estado", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCounter();
+      renderSchedules();
+      restorePreviousState();
+    });
+  </script>
+</body>
+</html>
