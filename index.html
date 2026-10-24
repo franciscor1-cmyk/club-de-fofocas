@@ -688,95 +688,39 @@
           <div class="sort">Mais recentes</div>
         </div>
 
-        <article class="post">
-          <div class="post-header">
-            <div class="author">
-              <div class="author-avatar">V</div>
-              <div class="author-meta">
-                <strong>Violeta Nox</strong>
-                <span>há 2h • privado</span>
+        <div id="realFeedContainer">
+          <!-- Posts reais carregados do Supabase entrarão aqui.
+               Mantivemos os originais temporariamente caso a DB não ligue. -->
+          <article class="post fallback-post">
+            <div class="post-header">
+              <div class="author">
+                <div class="author-avatar">V</div>
+                <div class="author-meta">
+                  <strong>Violeta Nox</strong>
+                  <span>há 2h • privado</span>
+                </div>
               </div>
+              <div class="badge">Rumor</div>
             </div>
-            <div class="badge">Rumor</div>
-          </div>
 
-          <div class="post-body">
-            <h3 class="post-title">A varanda do terceiro andar ainda sabe o que ninguém disse em voz alta.</h3>
-            <p class="post-excerpt">
-              Foi sentada a conversa mais curta da semana: uma nova visita, um nome trocado, um sorriso que não saiu do rosto de quem ficou depois da porta fechar.
-            </p>
-            <div class="post-visual"></div>
-          </div>
-
-          <div class="post-meta">
-            <div class="post-actions">
-              <span>♡ 482</span>
-              <span>💬 63</span>
-              <span>↻ 21</span>
+            <div class="post-body">
+              <h3 class="post-title">A varanda do terceiro andar ainda sabe o que ninguém disse em voz alta.</h3>
+              <p class="post-excerpt">
+                Foi sentada a conversa mais curta da semana: uma nova visita, um nome trocado, um sorriso que não saiu do rosto de quem ficou depois da porta fechar.
+              </p>
+              <div class="post-visual"></div>
             </div>
-            <div class="badge">#gossip</div>
-          </div>
-        </article>
 
-        <article class="post">
-          <div class="post-header">
-            <div class="author">
-              <div class="author-avatar">L</div>
-              <div class="author-meta">
-                <strong>Luna Dourada</strong>
-                <span>há 5h • corações</span>
+            <div class="post-meta">
+              <div class="post-actions">
+                <span>♡ 482</span>
+                <span>💬 63</span>
+                <span>↻ 21</span>
               </div>
+              <div class="badge">#gossip</div>
             </div>
-            <div class="badge">Notícia</div>
-          </div>
-
-          <div class="post-body">
-            <h3 class="post-title">O convite do jantar tinha data falsa e um motivo muito mais bonito do que parecia.</h3>
-            <p class="post-excerpt">
-              Ninguém admite, mas a mesa ficou a olhar para a mesma porta durante a noite inteira. Alguém percebeu, e foi isso que deixou tudo mais quente do que devia.
-            </p>
-            <div class="post-visual" style="background: linear-gradient(135deg, rgba(244,178,157,0.18), rgba(141,212,213,0.12)), linear-gradient(140deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));"></div>
-          </div>
-
-          <div class="post-meta">
-            <div class="post-actions">
-              <span>♡ 630</span>
-              <span>💬 94</span>
-              <span>↻ 29</span>
-            </div>
-            <div class="badge">#convite</div>
-          </div>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="author">
-              <div class="author-avatar">C</div>
-              <div class="author-meta">
-                <strong>Clara Morsa</strong>
-                <span>há 1d • murmúrio</span>
-              </div>
-            </div>
-            <div class="badge">Bastidores</div>
-          </div>
-
-          <div class="post-body">
-            <h3 class="post-title">A porta do corredor fechou antes do café e ninguém percebeu que o silêncio falou primeiro.</h3>
-            <p class="post-excerpt">
-              Um piscar de olhos, um copo pousado sem som, a chegada de duas pessoas em momentos diferentes. E a história inteira foi recontada em meia dúzia de frases que ninguém conseguiu apagar depois.
-            </p>
-            <div class="post-visual" style="background: linear-gradient(135deg, rgba(141,212,213,0.18), rgba(240,109,111,0.12)), linear-gradient(140deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));"></div>
-          </div>
-
-          <div class="post-meta">
-            <div class="post-actions">
-              <span>♡ 511</span>
-              <span>💬 71</span>
-              <span>↻ 17</span>
-            </div>
-            <div class="badge">#murmurio</div>
-          </div>
-        </article>
+          </article>
+        </div>
       </section>
 
       <aside class="sidebar">
@@ -799,6 +743,17 @@
               <strong>8</strong>
               <span>mistérios</span>
             </div>
+          </div>
+        </div>
+
+        <!-- NOVO: Ponto de Encontro Físico -->
+        <div class="side-card" id="espaco-fisico">
+          <h3>Ponto de Encontro Físico</h3>
+          <div class="club-box">
+            <p style="margin:0; color: var(--muted); line-height:1.7;" id="localFisicoAtual">
+              A procurar o próximo ponto de encontro seguro...
+            </p>
+            <button type="button" class="button ghost" style="margin-top: 10px; width: 100%;" id="verMapaBtn">Ver Coordenadas</button>
           </div>
         </div>
 
@@ -858,7 +813,15 @@
     </main>
   </div>
 
+  <!-- Cliente Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <script>
+    // Inicialização do Supabase (SUBSTITUI ISTO)
+    const supabaseUrl = 'URL_DO_TEU_SUPABASE'; 
+    const supabaseKey = 'TUA_CHAVE_ANONIMA';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     const accessStorageKey = 'clubAccess';
     const scheduleStorageKey = 'clubSchedules';
     const secretCode = 'murmurio-secreto-clube';
@@ -879,6 +842,7 @@
     const secretAccessMessage = document.getElementById('secretAccessMessage');
     const secretTextBox = document.getElementById('secretTextBox');
     const secretText = document.getElementById('secretText');
+    const realFeedContainer = document.getElementById('realFeedContainer');
 
     const miniGossipList = document.getElementById('miniGossipList');
     const scheduleSidebar = document.getElementById('scheduleSidebar');
@@ -1011,6 +975,98 @@
       setMessage(entryMessage, 'Entrada válida. Acesso liberado.', 'success');
     }
 
+    // --- FUNÇÕES SUPABASE ---
+
+    async function carregarFeedReal() {
+      try {
+        const { data: posts, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false });
+          
+        if (posts && posts.length > 0) {
+          realFeedContainer.innerHTML = ''; // Limpa os fallback posts
+          posts.forEach(post => {
+            const article = document.createElement('article');
+            article.className = 'post';
+            article.innerHTML = `
+              <div class="post-header">
+                <div class="author">
+                  <div class="author-avatar">${post.autor.charAt(0).toUpperCase()}</div>
+                  <div class="author-meta">
+                    <strong>${post.autor}</strong>
+                    <span>agora mesmo</span>
+                  </div>
+                </div>
+              </div>
+              <div class="post-body">
+                <h3 class="post-title">${post.titulo}</h3>
+                <p class="post-excerpt">${post.excerto}</p>
+                <div class="post-visual"></div>
+              </div>
+              <div class="post-meta">
+                <div class="post-actions">
+                  <span>♡ ${post.likes || 0}</span>
+                </div>
+              </div>
+            `;
+            realFeedContainer.appendChild(article);
+          });
+        }
+      } catch (err) {
+        console.warn("Sem ligação ao feed real do Supabase:", err);
+      }
+    }
+
+    async function validarCodigoSupabase(inputCode) {
+      try {
+        const { data, error } = await supabase
+          .from('centro_codigos')
+          .select('mensagem_revelada')
+          .eq('codigo', inputCode)
+          .eq('ativo', true)
+          .single();
+          
+        if (data) {
+          secretText.textContent = data.mensagem_revelada;
+          secretTextBox.classList.remove('hidden');
+          secretTextBox.style.display = 'block';
+          setMessage(secretAccessMessage, 'Chave válida encontrada.', 'success');
+        } else {
+          // Fallback para código local se não houver base de dados configurada
+          verificarCodigoLocal(inputCode);
+        }
+      } catch (err) {
+        verificarCodigoLocal(inputCode);
+      }
+    }
+
+    function verificarCodigoLocal(value) {
+      if (normalize(value) === normalize(secretCode)) {
+        secretText.textContent = secretMessage;
+        secretTextBox.classList.remove('hidden');
+        secretTextBox.style.display = 'block';
+        setMessage(secretAccessMessage, 'Chave válida (Modo Local).', 'success');
+      } else {
+        secretTextBox.classList.add('hidden');
+        secretTextBox.style.display = 'none';
+        setMessage(secretAccessMessage, 'Frase incorreta ou desativada.', 'error');
+      }
+    }
+
+    async function carregarParteFisica() {
+      try {
+        const { data, error } = await supabase.from('espacos_fisicos').select('*').limit(1).single();
+        if (data) {
+          document.getElementById('localFisicoAtual').textContent = `${data.nome_local}: ${data.descricao}`;
+        }
+      } catch (err) {
+        console.warn("Sem ligação aos espaços físicos do Supabase:", err);
+      }
+    }
+
+    // --- EVENT LISTENERS ---
+
     secretToggle.addEventListener('click', () => {
       secretBox.classList.toggle('open');
       if (secretBox.classList.contains('open')) setTimeout(() => secretInput.focus(), 80);
@@ -1032,22 +1088,14 @@
       }
     });
 
+    // Usa a validação via Supabase em vez da estática
     secretAccessBtn.addEventListener('click', () => {
       const value = secretAccessInput.value.trim();
       if (!value) {
         setMessage(secretAccessMessage, 'Escreve a frase secreta.', 'error');
         return;
       }
-      if (normalize(value) === normalize(secretCode)) {
-        secretText.textContent = secretMessage;
-        secretTextBox.classList.remove('hidden');
-        secretTextBox.style.display = 'block';
-        setMessage(secretAccessMessage, 'Chave válida. Texto secreto revelado.', 'success');
-      } else {
-        secretTextBox.classList.add('hidden');
-        secretTextBox.style.display = 'none';
-        setMessage(secretAccessMessage, 'Frase incorreta. Só o clube a conhece.', 'error');
-      }
+      validarCodigoSupabase(value);
     });
 
     adminLoginBtn.addEventListener('click', () => {
@@ -1072,6 +1120,10 @@
       renderMiniGossip();
       renderSchedules();
       renderSchedulesSidebar();
+      
+      // Carrega os dados reais
+      carregarFeedReal();
+      carregarParteFisica();
 
       const peopleCount = document.getElementById('peopleCount');
       if (peopleCount) {
